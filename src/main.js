@@ -4,11 +4,15 @@ import App from "./App.vue";
 import router from "./router/router";
 import { createPinia } from "pinia";
 import uiComponents from "./components/UI";
+import commonComponents from "./components/common";
 
 const pinia = createPinia();
 
 const app = createApp(App);
 uiComponents.forEach((component) => {
+	app.component(component.name, component);
+});
+commonComponents.forEach((component) => {
 	app.component(component.name, component);
 });
 app.use(router);

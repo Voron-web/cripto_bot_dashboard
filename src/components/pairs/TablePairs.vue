@@ -72,13 +72,13 @@
 					<td class="table__tf">{{ convertTimeframe(item.options.timeframeBase) }}</td>
 					<td class="table__capital">{{ item.capital }}</td>
 					<td class="table__isactive">
-						<TableCheck v-if="item.isActive" class="check" />
+						<TableCheck :isCheck="item.isActive" class="check" />
 					</td>
 					<td class="table__deal">
-						<TableCheck v-if="item.isDealOpen" class="check" />
+						<TableCheck :isCheck="item.isDealOpen" class="check" />
 					</td>
 					<td class="table__edit">
-						<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<svg @click="$emit('pairEdit', item)" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<g id="SVGRepo_iconCarrier">
 								<path
 									fill-rule="evenodd"

@@ -4,7 +4,7 @@
 		<div class="table">
 			<div class="table__control"><FilterPanel @updateFilters="filterOption = $event" @clickAddPair="openDialog('add')" /></div>
 			<div class="table__content">
-				<TablePairs :data="getFiltredData(filterOption)"></TablePairs>
+				<TablePairs :data="getFiltredData(filterOption)" @pairEdit="openDialog('edit', $event)"></TablePairs>
 			</div>
 		</div>
 	</div>
@@ -19,6 +19,7 @@ import PairDialog from "@/components/pairs/PairDialog.vue";
 
 import { usePairsStore } from "@/store/pairsStore";
 import { mapActions, mapState } from "pinia";
+import { convertTimeframe } from "../composables/convertTimeframe";
 
 export default {
 	data() {
@@ -72,10 +73,48 @@ export default {
 				this.dialogOptions = {
 					type: type,
 					title: "Add new pair",
-					symbol: "BTCUSDT",
-					capital: 100,
-					timeframe: "1h",
-					profit: 50,
+					formOptions: {
+						setting: {
+							symbolMultiselect: false,
+							symbolSearchable: true,
+							timeframeMultiselect: false,
+							timeframeSearchable: false,
+							capitalTitle: "Base capital (USDT)",
+						},
+						preSelect: {
+							symbol: "BTCUSDT",
+							capital: 100,
+							timeframe: "1h",
+							profit: 50,
+							checkRsi: true,
+							checkMacdZone: true,
+						},
+					},
+				};
+			} else if (type == "edit") {
+				this.dialogOptions = {
+					type: type,
+					title: `Edit pair ${data.symbol}`,
+					formOptions: {
+						setting: {
+							symbolSelect: false,
+							timeframeMultiselect: false,
+							timeframeSearchable: false,
+							capitalTitle: "Capital (USDT)",
+							checkboxIsActive: false,
+							indicatorIsActive: true,
+						},
+						preSelect: {
+							symbol: data.symbol,
+							capital: data.capital,
+							timeframe: convertTimeframe(data.options.timeframeBase, "toTitle"),
+							profit: data.options.percentProfit,
+							checkRsi: data.options.checkRsi,
+							checkMacdZone: data.options.checkMacdZone,
+							isActive: data.isActive,
+							decimals: data.options.decimals,
+						},
+					},
 				};
 			}
 			this.dialogIsOpen = true;
