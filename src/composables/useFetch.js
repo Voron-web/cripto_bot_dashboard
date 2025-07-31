@@ -9,7 +9,7 @@ export async function useFetch(url, options = {}) {
 	try {
 		const response = await apiClient({
 			url,
-			method: options.url || "GET",
+			method: options.method || "GET",
 			data: options.body || null,
 			params: options.params || null,
 			headers: options.headers || {},

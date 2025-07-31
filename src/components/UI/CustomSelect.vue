@@ -29,7 +29,7 @@ export default {
 		label: String,
 		placeholder: String,
 		options: { type: Array, default: [] },
-		modelValue: Array,
+		modelValue: [Array, Object],
 		searchable: { type: Boolean, default: false },
 		multiple: { type: Boolean, default: true },
 	},
@@ -64,7 +64,7 @@ export default {
 		background: var(--btn-gradient);
 		height: 54px;
 		border-radius: 16px;
-		z-index: 51;
+		// z-index: 51;
 	}
 	&__tags {
 		padding-top: 15px;

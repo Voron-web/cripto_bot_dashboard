@@ -3,8 +3,8 @@
 		<InputMain v-model="filterData.symbolFilter" placeholder="Start entering the name of the pair" label="Symbol filter" />
 		<CustomSelect class="custom-select" v-model="filterData.timeframeFilter" label="Timeframes" :options="optionsList" />
 		<div class="checkbox-block">
-			<CustomCheckbox v-model="filterData.activeFilter" label="Active only" />
-			<CustomCheckbox v-model="filterData.dealFilter" label="With open deal" />
+			<CustomCheckbox v-model="filterData.activeFilter">Active only</CustomCheckbox>
+			<CustomCheckbox v-model="filterData.dealFilter">With open deal</CustomCheckbox>
 		</div>
 		<div class="clear-btn" @click="clearFilter">
 			<svg viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">

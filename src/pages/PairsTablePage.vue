@@ -8,7 +8,8 @@
 			</div>
 		</div>
 	</div>
-	<PairDialog v-if="dialogIsOpen" :dialogOptions @closeDialog="closeDialog" />
+	<PairDialog v-if="dialogIsOpen" :dialogOptions @closeDialog="closeDialog" @openModal="openModal" />
+	<ModalWindow v-if="modalIsOpen" :type="modalType" @closeModal="closeModal">{{ modalText }}</ModalWindow>
 </template>
 
 <script>
@@ -30,6 +31,9 @@ export default {
 			},
 			dialogIsOpen: false,
 			dialogOptions: {},
+			modalIsOpen: false,
+			modalType: "",
+			modalText: "",
 		};
 	},
 	components: { TablePairs, FilterPanel, PairDialog },
@@ -67,13 +71,24 @@ export default {
 			if (type == "add") {
 				this.dialogOptions = {
 					type: type,
-					title: "Add pair",
+					title: "Add new pair",
 					symbol: "BTCUSDT",
 					capital: 100,
 					timeframe: "1h",
+					profit: 50,
 				};
 			}
 			this.dialogIsOpen = true;
+		},
+		closeModal() {
+			this.modalIsOpen = false;
+			this.modalType = "";
+			this.modalText = "";
+		},
+		openModal(data) {
+			this.modalType = data.type;
+			this.modalText = data.text;
+			this.modalIsOpen = true;
 		},
 	},
 	computed: { ...mapState(usePairsStore, ["data", "dataIsLoad", "fetchError"]) },
@@ -94,8 +109,10 @@ export default {
 }
 .table {
 	border-radius: 12px;
+	border: var(--border-block);
+
 	&__control {
-		border-bottom: 5px solid var(--accent-color);
+		border-bottom: var(--border-block);
 	}
 }
 </style>

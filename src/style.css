@@ -110,6 +110,7 @@ body {
   --bg-color: #080F25;
   --accent-color: #0A1330;
   --block-color: #0b1739;
+  --border-block: 1px solid #343b4f;
   --btn-gradient: linear-gradient(135.00deg, rgb(203, 60, 255) 19.855%, rgb(127, 37, 251) 68.339%);
 }
 
@@ -123,21 +124,6 @@ body {
   /* font-display: swap; */
 }
 
-@font-face {
-  font-family: 'PlanetiumX';
-  src: url('~@/assets/fonts/PlanetiumX/Planetium-XRegularDemo.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'lavash';
-  src: url('../assets/fonts/Lavash/lavash.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
 
 #app {
   width: 100%;

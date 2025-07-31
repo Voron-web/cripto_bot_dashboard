@@ -11,7 +11,7 @@
 				</svg>
 			</div>
 		</div>
-		<label>{{ label }}</label>
+		<label><slot></slot></label>
 	</div>
 </template>
 
@@ -40,7 +40,9 @@ export default {
 	position: relative;
 	display: flex;
 	align-items: center;
+	width: fit-content;
 	gap: 10px;
+	cursor: pointer;
 	&__frame {
 		width: 20px;
 		aspect-ratio: 1/1;
@@ -67,6 +69,8 @@ export default {
 		z-index: -5;
 	}
 	& label {
+		cursor: pointer;
+
 		font-family: "Work-sans";
 		color: var(--text-color);
 		font-weight: 500;

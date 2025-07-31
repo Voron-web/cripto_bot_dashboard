@@ -2,7 +2,15 @@
 	<div class="input__wrapper">
 		<label class="input__label">{{ label }}</label>
 		<div class="input__block">
-			<input class="input" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" :placeholder="placeholder" />
+			<input
+				class="input"
+				:class="{ invalid: isInvalid }"
+				:type="type ? type : null"
+				:max="max ? max : null"
+				:min="min ? min : null"
+				:value="modelValue"
+				@input="validation"
+				:placeholder="placeholder" />
 		</div>
 	</div>
 </template>
@@ -13,7 +21,29 @@ export default {
 	props: {
 		label: String,
 		placeholder: String,
-		modelValue: String,
+		modelValue: [String, Number],
+		type: String,
+		max: String,
+		min: String,
+	},
+	data() {
+		return {
+			isInvalid: false,
+		};
+	},
+	methods: {
+		validation(event) {
+			if (event.target.value != "" && this.type == "number" && (this.max || this.min)) {
+				if (Number(event.target.value) > Number(this.max) || Number(event.target.value) < Number(this.min)) {
+					if (Number(event.target.value) > Number(this.max)) {
+						event.target.value = this.max;
+					} else {
+						event.target.value = this.min;
+					}
+				}
+			}
+			this.$emit("update:modelValue", event.target.value);
+		},
 	},
 };
 </script>
@@ -25,12 +55,22 @@ export default {
 	width: 100%;
 	background: var(--block-color);
 	border-radius: 14px;
-	color: var(--text-color);
+	color: var(--title-color);
 	font-family: "Work-sans";
 	font-size: 16px;
+	font-weight: 500;
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
 	&::placeholder {
 		color: var(--text-color);
 		opacity: 0.4;
+	}
+	&.invalid {
+		box-shadow: inset 0 0 10px 3px red;
 	}
 	&__block {
 		display: flex;
