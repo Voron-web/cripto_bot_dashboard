@@ -1,0 +1,30 @@
+name: Deploy Vue Frontend to VDS
+
+on:
+  push:
+    branches:
+      - main # запускаем только при пуше в main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Upload via SCP
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.VDS_HOST }}
+          username: ${{ secrets.VDS_USER }}
+          port: 22
+          key: ${{ secrets.VDS_SSH_KEY }}
+          source: "dist/*"
+          target: "/var/www/cripto_bot_dashboard"

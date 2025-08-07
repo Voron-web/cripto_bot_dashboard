@@ -1,6 +1,6 @@
 <template>
 	<div class="filter-panel">
-		<InputMain v-model="filterData.symbolFilter" placeholder="Start entering the name of the pair" label="Symbol filter" />
+		<InputMain v-model="filterData.symbolFilter" placeholder="Start entering the name of the pair" label="Symbol filter">Symbol filter</InputMain>
 		<CustomSelect class="custom-select" v-model="filterData.timeframeFilter" label="Timeframes" :options="optionsList" />
 		<div class="checkbox-block">
 			<CustomCheckbox v-model="filterData.activeFilter">Active only</CustomCheckbox>

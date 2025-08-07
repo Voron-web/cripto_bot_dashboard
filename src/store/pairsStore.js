@@ -1,5 +1,6 @@
 import axios from "axios";
 import { defineStore } from "pinia";
+import { getPairList } from "../api/pairAPI";
 
 export const usePairsStore = defineStore("pairs", {
 	state: () => {
@@ -15,8 +16,7 @@ export const usePairsStore = defineStore("pairs", {
 			this.fetchError = null;
 
 			try {
-				const res = await axios.get("http://localhost:3000/api/pairs");
-				this.data = res.data;
+				this.data = await getPairList();
 				this.dataIsLoad = true;
 			} catch (error) {
 				this.fetchError = error.message;

@@ -9,7 +9,7 @@
 						<CustomBtn @click="addPair">Add pair</CustomBtn>
 					</div>
 					<div v-if="dialogOptions.type == 'edit'" class="pair-dialog__btn">
-						<CustomBtn @click="deletePair">Remove pair</CustomBtn>
+						<CustomBtn @click="askToConfirm">Remove pair</CustomBtn>
 					</div>
 					<div v-if="dialogOptions.type == 'edit'" class="pair-dialog__btn">
 						<CustomBtn @click="selectFilter.isActive = !selectFilter.isActive">{{ selectFilter.isActive ? "Deactivate" : "Activate" }}</CustomBtn>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { useFetch } from "../../composables/useFetch";
+import { addNewPair, deletePairApi, editPairApi } from "../../api/pairAPI";
 import { usePairsStore } from "../../store/pairsStore";
 
 export default {
@@ -53,7 +53,7 @@ export default {
 		async addPair() {
 			if (this.validation()) {
 				try {
-					const response = await useFetch("/addpair", { method: "POST", body: this.selectFilter });
+					const response = await addNewPair(this.selectFilter);
 
 					if (response.symbol == this.selectFilter.symbol.value) {
 						this.$emit("openModal", {
@@ -63,23 +63,80 @@ export default {
 						usePairsStore().getPairData();
 						this.closeDialog();
 					} else {
+						подтвердите;
 						throw new Error("Error pair added");
 					}
 				} catch (error) {
 					this.$emit("openModal", {
 						type: "error",
-						text: `An error occurred while adding the pair ${this.selectFilter.symbol.value}. 
+						text: `An error occurred while adding the pair ${this.selectFilter.symbol.value}.
 							${error}.
 							Please try again later`,
 					});
 				}
 			}
 		},
+		async editPair() {
+			if (this.checkForChange() && this.validation()) {
+				this.selectFilter.id = this.dialogOptions.id;
+				try {
+					const response = await editPairApi(this.selectFilter);
+
+					if (response.symbol == this.selectFilter.symbol.value) {
+						this.$emit("openModal", {
+							type: "info",
+							text: `The pair ${this.selectFilter.symbol.value} setting has been changed`,
+						});
+						usePairsStore().getPairData();
+						this.closeDialog();
+					} else {
+						throw new Error("Error pair edited");
+					}
+				} catch (error) {
+					this.$emit("openModal", {
+						type: "error",
+						text: `An error occurred while editing the pair ${this.selectFilter.symbol.value}.
+							${error}.
+							Please try again later`,
+					});
+				}
+			}
+		},
+		askToConfirm() {
+			this.$emit("openModal", {
+				type: "confirm",
+				text: `Do you really want to remove pair ${this.selectFilter.symbol.value}?`,
+				callback: this.deletePair,
+				param: { id: this.dialogOptions.id },
+			});
+		},
+		async deletePair(params) {
+			try {
+				const response = await deletePairApi(params);
+				if (response.symbol == this.selectFilter.symbol.value) {
+					this.$emit("openModal", {
+						type: "info",
+						text: `The pair ${this.selectFilter.symbol.value} has been removed`,
+					});
+					usePairsStore().getPairData();
+					this.closeDialog();
+				} else {
+					throw new Error("Error pair edited");
+				}
+			} catch (error) {
+				this.$emit("openModal", {
+					type: "error",
+					text: `An error occurred while remove the pair ${this.selectFilter.symbol.value}.
+							${error}.
+							Please try again later`,
+				});
+			}
+		},
 		validation() {
 			//check for dublicates
 			if (
 				usePairsStore().data.find((pair) => pair.symbol == this.selectFilter.symbol.value) &&
-				usePairsStore().data.find((pair) => pair.options.timeframeBase == this.selectFilter.timeframe.value)
+				usePairsStore().data.find((pair) => pair.options.timeframeBase == this.selectFilter.timeframe.value && this.dialogOptions.type == "add")
 			) {
 				this.$emit("openModal", {
 					type: "warning",
@@ -123,6 +180,26 @@ export default {
 				type: "warning",
 				text: `The value ${value} is invalid`,
 			});
+		},
+		checkForChange() {
+			const fieldsToCompare = ["capital", "decimals", "isActive", "profit", "checkMacdZone", "checkRsi"];
+			const isEqual = fieldsToCompare.every((item) => this.dialogOptions.formOptions.preSelect[item] == this.selectFilter[item]);
+
+			if (isEqual && this.dialogOptions.formOptions.preSelect.timeframe == this.selectFilter.timeframe.title) {
+				this.$emit("openModal", {
+					type: "error",
+					text: `There is no change`,
+				});
+				return false;
+			} else if (this.dialogOptions.formOptions.preSelect.capital != this.selectFilter.capital && this.dialogOptions.isDealOpen) {
+				this.$emit("openModal", {
+					type: "error",
+					text: `Capital can't be changed if the pair has an active deal`,
+				});
+				return false;
+			} else {
+				return true;
+			}
 		},
 	},
 };

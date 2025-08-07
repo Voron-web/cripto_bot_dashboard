@@ -1,3 +1,12 @@
+<template>
+	<div class="main">
+		<MainSidebar v-if="!isAuthPage"></MainSidebar>
+		<div class="content">
+			<router-view></router-view>
+		</div>
+	</div>
+</template>
+
 <script>
 import MainSidebar from "./components/aside/MainSidebar.vue";
 import "./style.css";
@@ -8,17 +17,14 @@ export default {
 	components: {
 		MainSidebar,
 	},
+	computed: {
+		isAuthPage() {
+			const authRouters = ["/login"];
+			return authRouters.includes(this.$route.path);
+		},
+	},
 };
 </script>
-
-<template>
-	<div class="main">
-		<MainSidebar></MainSidebar>
-		<div class="content">
-			<router-view></router-view>
-		</div>
-	</div>
-</template>
 
 <style scoped>
 .main {
@@ -27,7 +33,7 @@ export default {
 	display: flex;
 }
 .content {
-	padding: 20px;
+	/* padding: 20px; */
 	flex-grow: 1;
 }
 </style>

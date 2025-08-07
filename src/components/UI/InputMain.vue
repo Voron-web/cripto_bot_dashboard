@@ -1,6 +1,7 @@
 <template>
 	<div class="input__wrapper">
-		<label class="input__label">{{ label }}</label>
+		<!-- <label class="input__label">{{ label }}</label> -->
+		<label class="input__label"><slot></slot></label>
 		<div class="input__block">
 			<input
 				class="input"
@@ -89,6 +90,7 @@ export default {
 	}
 
 	&__label {
+		margin-left: 10px;
 		font-family: "Work-sans";
 		color: var(--text-color);
 		font-weight: 600;

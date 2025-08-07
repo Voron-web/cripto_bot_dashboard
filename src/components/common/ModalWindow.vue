@@ -38,8 +38,33 @@
 				</svg>
 				Error
 			</div>
+			<div class="modal__title" v-if="type == 'confirm'">
+				<svg viewBox="0 0 600 600" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" fill="#000000">
+					<g>
+						<path
+							style="stroke-width: 1.05103; stroke-linecap: round; stroke-linejoin: round; paint-order: stroke fill markers"
+							d="m 300.60937,-12.792969 c -173.60599,0 -315.214839,141.724839 -315.214839,315.404299 0,173.67945 141.608849,315.40429 315.214839,315.40429 173.606,0 315.21485,-141.72484 315.21485,-315.40429 0,-173.67946 -141.60885,-315.404299 -315.21485,-315.404299 z m 0,84.082031 c 128.13278,10e-7 231.13086,103.052738 231.13086,231.322268 0,128.26952 -102.99808,231.32226 -231.13086,231.32226 C 172.4766,533.93359 69.476562,430.88085 69.476562,302.61133 69.476563,174.3418 172.4766,71.289062 300.60937,71.289062 Z"
+							id="path390"
+							transform="matrix(0.95173205,0,0,0.95115787,13.901174,12.168794)"></path>
+						<path
+							style="stroke-linecap: round; stroke-linejoin: round; paint-order: stroke fill markers"
+							d="m 300,384 c -27.14042,0 -50,22.85958 -50,50 0,27.14042 22.85958,50 50,50 27.14042,0 50,-22.85958 50,-50 0,-27.14042 -22.85958,-50 -50,-50 z"
+							id="path1629"
+							sodipodi:nodetypes="sssss"></path>
+						<path
+							id="path343"
+							style="stroke-linecap: round; stroke-linejoin: round; paint-order: stroke fill markers"
+							d="m 278.08676,111.38574 c -38.36479,8.45756 -69.16019,39.17753 -76.79854,78.69745 a 40,40 0 0 0 31.68395,46.86538 40,40 0 0 0 46.86346,-31.68355 c 1.79434,-9.28366 9.286,-15.75589 18.73178,-16.18385 9.44577,-0.42798 17.49014,5.33989 20.11664,14.42326 2.6265,9.08335 -1.09839,18.25628 -9.3149,22.93547 a 40,40 0 0 0 -9.35711,7.71088 40,40 0 0 0 -0.004,0.003 c -33.0243,21.0091 -50.8245,59.64136 -45.33599,98.39549 a 40,40 0 0 0 45.21236,33.99557 40,40 0 0 0 33.99709,-45.21467 c -1.11453,-7.86962 2.36064,-15.41229 9.06697,-19.67825 a 40,40 0 0 0 8.31175,-7.07224 c 38.40211,-23.26481 56.80531,-69.96796 44.27655,-113.29678 -12.77812,-44.19116 -54.63578,-74.20291 -100.59015,-72.12083 -5.74431,0.26027 -11.37926,1.01551 -16.85995,2.22373 z"></path>
+					</g>
+				</svg>
+				Confirm
+			</div>
 			<div class="modal__content">
 				<slot></slot>
+			</div>
+			<div v-if="type == 'confirm'" class="modal__btns">
+				<CustomBtn @btnClick="submitModal">Confirm</CustomBtn>
+				<CustomBtn @btnClick="closeModal">Cancel</CustomBtn>
 			</div>
 			<div class="modal__close" @click="closeModal">
 				<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#000000">
@@ -58,10 +83,20 @@ export default {
 	name: "ModalWindow",
 	props: {
 		type: { type: String, default: "info" },
+		callback: Function,
+		callbackParam: null,
 	},
 	methods: {
 		closeModal() {
 			this.$emit("closeModal");
+		},
+		async submitModal() {
+			if (this.callbackParam) {
+				await this.callback(this.callbackParam);
+			} else {
+				await this.callback();
+			}
+			this.closeModal();
 		},
 	},
 };
@@ -126,6 +161,10 @@ export default {
 			cursor: pointer;
 			fill: var(--primary-color);
 		}
+	}
+	&__btns {
+		display: flex;
+		gap: 20px;
 	}
 }
 </style>

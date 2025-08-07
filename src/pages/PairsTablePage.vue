@@ -8,8 +8,10 @@
 			</div>
 		</div>
 	</div>
-	<PairDialog v-if="dialogIsOpen" :dialogOptions @closeDialog="closeDialog" @openModal="openModal" />
-	<ModalWindow v-if="modalIsOpen" :type="modalType" @closeModal="closeModal">{{ modalText }}</ModalWindow>
+	<PairDialog v-if="dialogIsOpen" :dialogOptions @closeDialog="closeDialog" @openModal="openModal" @confirmDelete="" />
+	<ModalWindow v-if="modalIsOpen" :type="modalType" :callback="modalCallback" :callbackParam="callbackParam" @closeModal="closeModal">
+		{{ modalText }}
+	</ModalWindow>
 </template>
 
 <script>
@@ -35,6 +37,8 @@ export default {
 			modalIsOpen: false,
 			modalType: "",
 			modalText: "",
+			modalCallback: () => {},
+			callbackParam: null,
 		};
 	},
 	components: { TablePairs, FilterPanel, PairDialog },
@@ -95,6 +99,8 @@ export default {
 				this.dialogOptions = {
 					type: type,
 					title: `Edit pair ${data.symbol}`,
+					id: data._id,
+					isDealOpen: data.isDealOpen,
 					formOptions: {
 						setting: {
 							symbolSelect: false,
@@ -127,6 +133,8 @@ export default {
 		openModal(data) {
 			this.modalType = data.type;
 			this.modalText = data.text;
+			this.modalCallback = data.callback || null;
+			this.callbackParam = data.param || null;
 			this.modalIsOpen = true;
 		},
 	},

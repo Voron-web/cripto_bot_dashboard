@@ -61,7 +61,7 @@
 <script>
 import CustomSelect from "../UI/CustomSelect.vue";
 import { convertTimeframe } from "../../composables/convertTimeframe";
-import { useFetch } from "../../composables/useFetch";
+import { useFetch } from "../../api/useFetch";
 
 export default {
 	name: "PairForm",
