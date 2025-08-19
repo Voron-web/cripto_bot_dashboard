@@ -27,13 +27,15 @@
 				:options="optionsList" />
 		</div>
 		<div class="form__capital">
-			<InputMain type="number" min="1" :label="formOptions.setting.capitalTitle" v-model="selectData.capital" />
+			<InputMain type="number" min="1" v-model="selectData.capital">
+				{{ formOptions.setting.capitalTitle }}
+			</InputMain>
 		</div>
 		<div class="form__profit">
-			<InputMain type="number" min="0" max="100" label="Profit (%)" v-model="selectData.profit" />
+			<InputMain type="number" min="0" max="100" v-model="selectData.profit">Profit (%)</InputMain>
 		</div>
 		<div class="form__decimals">
-			<InputMain type="number" min="0" label="Decimals" v-model="selectData.decimals" />
+			<InputMain type="number" min="0" v-model="selectData.decimals">Decimals</InputMain>
 			<p class="form__warning">
 				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<g>
@@ -50,6 +52,8 @@
 		<div class="form__options">
 			<CustomCheckbox v-model="selectData.checkRsi">RSI filter</CustomCheckbox>
 			<CustomCheckbox v-model="selectData.checkMacdZone">MACD zone filter</CustomCheckbox>
+			<CustomCheckbox v-model="selectData.checkMacdRiseBuy">Use MACD rise for buy</CustomCheckbox>
+			<CustomCheckbox v-model="selectData.checkMacdRiseSell">Use MACD rise for sell</CustomCheckbox>
 			<CustomCheckbox v-if="setting.checkboxIsActive" v-model="selectData.isActive">Set to Active to start trading now</CustomCheckbox>
 		</div>
 		<div v-if="setting.indicatorIsActive" class="form__indicator" :class="{ 'active': selectData.isActive }">
@@ -94,6 +98,8 @@ export default {
 				profit: this.formOptions.preSelect.profit != null ? String(this.formOptions.preSelect.profit) : 0,
 				checkRsi: this.formOptions.preSelect.checkRsi != null ? this.formOptions.preSelect.checkRsi : true,
 				checkMacdZone: this.formOptions.preSelect.checkMacdZone != null ? this.formOptions.preSelect.checkMacdZone : true,
+				checkMacdRiseBuy: this.formOptions.preSelect.checkMacdRiseBuy != null ? this.formOptions.preSelect.checkMacdRiseBuy : false,
+				checkMacdRiseSell: this.formOptions.preSelect.checkMacdRiseSell != null ? this.formOptions.preSelect.checkMacdRiseSell : false,
 				isActive: this.formOptions.preSelect.isActive != null ? this.formOptions.preSelect.isActive : true,
 				decimals: null,
 			},
@@ -129,6 +135,11 @@ export default {
 		},
 	},
 	watch: {
+		"selectData.symbol": {
+			handler(newVal) {
+				this.setDecimals();
+			},
+		},
 		selectData: {
 			deep: true,
 			handler(newVal) {
@@ -166,6 +177,7 @@ export default {
 	}
 	&__indicator {
 		display: flex;
+		height: 50px;
 		border-radius: 12px;
 		border: 3px solid #555;
 		background: #555;

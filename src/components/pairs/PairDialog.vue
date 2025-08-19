@@ -182,7 +182,7 @@ export default {
 			});
 		},
 		checkForChange() {
-			const fieldsToCompare = ["capital", "decimals", "isActive", "profit", "checkMacdZone", "checkRsi"];
+			const fieldsToCompare = ["capital", "decimals", "isActive", "profit", "checkMacdZone", "checkRsi", "checkMacdRiseBuy", "checkMacdRiseSell"];
 			const isEqual = fieldsToCompare.every((item) => this.dialogOptions.formOptions.preSelect[item] == this.selectFilter[item]);
 
 			if (isEqual && this.dialogOptions.formOptions.preSelect.timeframe == this.selectFilter.timeframe.title) {

@@ -92,6 +92,8 @@ export default {
 							profit: 50,
 							checkRsi: true,
 							checkMacdZone: true,
+							checkMacdRiseBuy: false,
+							checkMacdRiseSell: false,
 						},
 					},
 				};
@@ -117,6 +119,8 @@ export default {
 							profit: data.options.percentProfit,
 							checkRsi: data.options.checkRsi,
 							checkMacdZone: data.options.checkMacdZone,
+							checkMacdRiseBuy: data.options.checkMacdRiseBuy,
+							checkMacdRiseSell: data.options.checkMacdRiseSell,
 							isActive: data.isActive,
 							decimals: data.options.decimals,
 						},

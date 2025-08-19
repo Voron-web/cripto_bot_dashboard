@@ -61,6 +61,7 @@
 							<span>Capital</span>
 						</div>
 					</td>
+					<td>ROI</td>
 					<td>Active</td>
 					<td>Open deal</td>
 					<td class="table__title_edit"></td>
@@ -70,7 +71,8 @@
 				<tr v-for="item in data" :key="item._id">
 					<td class="table__symbol">{{ item.symbol }}</td>
 					<td class="table__tf">{{ convertTimeframe(item.options.timeframeBase) }}</td>
-					<td class="table__capital">{{ item.capital }}</td>
+					<td class="table__capital">{{ item.capital.toFixed(2) }} USDT</td>
+					<td class="table__roi">{{ (((item.capital - item.startedCapital + item.totalEarning) / item.startedCapital) * 100).toFixed(3) }} %</td>
 					<td class="table__isactive">
 						<TableCheck :isCheck="item.isActive" class="check" />
 					</td>
@@ -103,7 +105,7 @@ import TableCheck from "@/components/UI/TableCheck.vue";
 export default {
 	props: {
 		data: Array,
-		default: [],
+		// default: [],
 	},
 	components: {
 		TableCheck,
