@@ -50,6 +50,7 @@ export default {
 						{ title: "Pair history", src: "/pairs/history" },
 					],
 				},
+				{ title: "Pair test", icon: "test", src: "/test" },
 			],
 		};
 	},

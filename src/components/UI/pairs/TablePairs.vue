@@ -168,7 +168,7 @@ tbody {
 		}
 	}
 	& tr:nth-child(odd) {
-		background: var(--accent-color);
+		background: var(--neutral-color);
 	}
 }
 .check {

@@ -55,7 +55,7 @@ export default {
 	height: 100%;
 	width: 100%;
 	background: var(--block-color);
-	border-radius: 14px;
+	border-radius: 12px;
 	color: var(--title-color);
 	font-family: "Work-sans";
 	font-size: 16px;
@@ -77,10 +77,10 @@ export default {
 		display: flex;
 		align-items: start;
 		justify-content: center;
-		height: 54px;
+		height: 44px;
 		width: 100%;
 		padding: 2px;
-		border-radius: 16px;
+		border-radius: 14px;
 		background: var(--btn-gradient);
 	}
 	&__wrapper {

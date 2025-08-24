@@ -5,6 +5,7 @@ import router from "./router/router";
 import { createPinia } from "pinia";
 import uiComponents from "./components/UI";
 import commonComponents from "./components/common";
+import VueApexCharts from "vue3-apexcharts";
 
 const pinia = createPinia();
 
@@ -17,4 +18,5 @@ commonComponents.forEach((component) => {
 });
 app.use(router);
 app.use(pinia);
+app.use(VueApexCharts);
 app.mount("#app");

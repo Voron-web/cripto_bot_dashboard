@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import MainPage from "../pages/MainPage.vue";
 import PairsTablePage from "../pages/PairsTablePage.vue";
 import AuthPage from "../pages/AuthPage.vue";
+import TestPairPage from "../pages/TestPairPage.vue";
 
 const routes = [
 	{ path: "/", component: MainPage },
@@ -9,6 +10,7 @@ const routes = [
 	{ path: "/pairs/table", component: PairsTablePage },
 	{ path: "/pairs/history", component: PairsTablePage },
 	{ path: "/login", component: AuthPage },
+	{ path: "/test", component: TestPairPage },
 ];
 
 const router = createRouter({

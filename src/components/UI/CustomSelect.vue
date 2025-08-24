@@ -62,18 +62,19 @@ export default {
 		position: relative;
 		padding: 2px;
 		background: var(--btn-gradient);
-		height: 54px;
-		border-radius: 16px;
+		height: 44px;
+		border-radius: 14px;
 		// z-index: 51;
 	}
 	&__tags {
-		padding-top: 15px;
+		padding-top: 10px;
 		padding-left: 15px;
 		height: 100%;
 		background: var(--block-color);
 		border: none;
-		border-radius: 14px;
+		border-radius: 12px;
 		& input {
+			font-size: 14px;
 			background: var(--block-color);
 			color: var(--text-color);
 		}
@@ -107,15 +108,16 @@ export default {
 		background: var(--block-color);
 		color: var(--title-color);
 		font-weight: 500;
+		font-size: 14px;
 	}
 	&__option {
 		max-width: 100%;
 		color: var(--text-color);
 		white-space: initial;
 		&--highlight {
-			background: var(--accent-color);
+			background: var(--neutral-color);
 			&.multiselect__option--selected {
-				background: var(--accent-color);
+				background: var(--neutral-color);
 			}
 		}
 		&--selected {
@@ -125,6 +127,7 @@ export default {
 	}
 	&__content {
 		max-width: 100%;
+		font-size: 14px;
 	}
 	&__content-wrapper {
 		top: calc(100% + 5px);

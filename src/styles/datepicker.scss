@@ -1,0 +1,57 @@
+.mx-input-wrapper {
+    padding: 2px;
+    background: var(--btn-gradient);
+    border-radius: 12px;
+}
+
+.mx-input {
+    background-color: var(--block-color);
+    border-radius: 10px;
+    color: var(--title-color);
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+.mx-datepicker svg {
+    fill: var(--primary-color);
+}
+
+.mx-calendar {
+    background-color: var(--block-color);
+}
+.mx-calendar-content .cell.in-range {
+    background-color: var(--secondary-color);
+    opacity: 0.5;
+    color: var(--text-color);
+}
+
+.mx-calendar-content .cell.active {
+    background-color: var(--secondary-color);
+}
+
+.mx-calendar-content .cell:hover {
+    background-color: var(--secondary-color);
+    color: var(--accent-color);
+}
+.mx-table-date .cell.not-current-month {
+    color: var(--text-color);
+    opacity: 0.3;
+}
+.mx-datepicker-main {
+    color: var(--text-color);
+}
+
+.mx-datepicker-main {
+    border: 1px solid var(--primary-color);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.mx-calendar + .mx-calendar {
+    border-left: 1px solid var(--primary-color);
+}
+
+.mx-btn:hover {
+    color: var(--primary-color);
+}

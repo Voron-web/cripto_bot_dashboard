@@ -28,13 +28,13 @@
 		</div>
 		<div class="form__capital">
 			<InputMain type="number" min="1" v-model="selectData.capital">
-				{{ formOptions.setting.capitalTitle }}
+				{{ setting.capitalTitle }}
 			</InputMain>
 		</div>
 		<div class="form__profit">
 			<InputMain type="number" min="0" max="100" v-model="selectData.profit">Profit (%)</InputMain>
 		</div>
-		<div class="form__decimals">
+		<div class="form__decimals" v-if="setting.decimalsInput">
 			<InputMain type="number" min="0" v-model="selectData.decimals">Decimals</InputMain>
 			<p class="form__warning">
 				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,6 +49,15 @@
 				Do not change unless necessary
 			</p>
 		</div>
+		<DatePicker
+			class="form__date"
+			v-model:value="selectData.date"
+			type="date"
+			placeholder="Select start date"
+			:clearable="false"
+			value-type="x"
+			:range="true" />
+
 		<div class="form__options">
 			<CustomCheckbox v-model="selectData.checkRsi">RSI filter</CustomCheckbox>
 			<CustomCheckbox v-model="selectData.checkMacdZone">MACD zone filter</CustomCheckbox>
@@ -66,41 +75,50 @@
 import CustomSelect from "../UI/CustomSelect.vue";
 import { convertTimeframe } from "../../composables/convertTimeframe";
 import { useFetch } from "../../api/useFetch";
+import DatePicker from "vue-datepicker-next";
+import "vue-datepicker-next/index.css";
+import "../../styles/datepicker.scss";
 
 export default {
 	name: "PairForm",
 	props: {
-		formOptions: Object,
+		formOptions: { type: Object, default: {} },
 	},
 	data() {
 		return {
 			symbolList: [],
 			isLoading: false,
 			setting: {
-				symbolSelect: this.formOptions.setting.symbolSelect != null ? this.formOptions.setting.symbolSelect : true,
-				symbolSearchable: this.formOptions.setting.symbolSearchable != null ? this.formOptions.setting.symbolSearchable : true,
-				symbolMultiselect: this.formOptions.setting.symbolMultiselect != null ? this.formOptions.setting.symbolMultiselect : true,
-				timeframeSelect: this.formOptions.setting.timeframeSelect != null ? this.formOptions.setting.timeframeSelect : true,
-				timeframeSearchable: this.formOptions.setting.timeframeSearchable != null ? this.formOptions.setting.timeframeSearchable : true,
-				timeframeMultiselect: this.formOptions.setting.timeframeMultiselect != null ? this.formOptions.setting.timeframeMultiselect : true,
-				capitalTitle: this.formOptions.setting.capitalTitle != null ? this.formOptions.setting.capitalTitle : true,
-				checkboxIsActive: this.formOptions.setting.checkboxIsActive != null ? this.formOptions.setting.checkboxIsActive : true,
-				indicatorIsActive: this.formOptions.setting.indicatorIsActive != null ? this.formOptions.setting.indicatorIsActive : false,
+				symbolSelect: this.formOptions?.setting?.symbolSelect != null ? this.formOptions.setting.symbolSelect : true,
+				decimalsInput: this.formOptions?.setting?.decimalsInput != null ? this.formOptions.setting.decimalsInput : true,
+				dateSelect: this.formOptions?.setting?.dateSelect != null ? this.formOptions.setting.dateSelect : false,
+				symbolSearchable: this.formOptions?.setting?.symbolSearchable != null ? this.formOptions.setting.symbolSearchable : true,
+				symbolMultiselect: this.formOptions?.setting?.symbolMultiselect != null ? this.formOptions.setting.symbolMultiselect : true,
+				timeframeSelect: this.formOptions?.setting?.timeframeSelect != null ? this.formOptions.setting.timeframeSelect : true,
+				timeframeSearchable: this.formOptions?.setting?.timeframeSearchable != null ? this.formOptions.setting.timeframeSearchable : true,
+				timeframeMultiselect: this.formOptions?.setting?.timeframeMultiselect != null ? this.formOptions.setting.timeframeMultiselect : true,
+				capitalTitle: this.formOptions?.setting?.capitalTitle != null ? this.formOptions.setting.capitalTitle : "Capital",
+				checkboxIsActive: this.formOptions?.setting?.checkboxIsActive != null ? this.formOptions.setting.checkboxIsActive : true,
+				indicatorIsActive: this.formOptions?.setting?.indicatorIsActive != null ? this.formOptions.setting.indicatorIsActive : false,
 			},
 			selectData: {
 				symbol:
-					this.formOptions.preSelect.symbol != null ? { title: this.formOptions.preSelect.symbol, value: this.formOptions.preSelect.symbol } : null,
-				capital: this.formOptions.preSelect.capital != null ? String(this.formOptions.preSelect.capital) : 0,
+					this.formOptions?.preSelect?.symbol != null ? { title: this.formOptions.preSelect.symbol, value: this.formOptions.preSelect.symbol } : null,
+				capital: this.formOptions?.preSelect?.capital != null ? String(this.formOptions.preSelect.capital) : 0,
 				timeframe:
-					this.formOptions.preSelect.timeframe != null
+					this.formOptions?.preSelect?.timeframe != null
 						? { title: this.formOptions.preSelect.timeframe, value: convertTimeframe(this.formOptions.preSelect.timeframe, "toValue") }
 						: null,
-				profit: this.formOptions.preSelect.profit != null ? String(this.formOptions.preSelect.profit) : 0,
-				checkRsi: this.formOptions.preSelect.checkRsi != null ? this.formOptions.preSelect.checkRsi : true,
-				checkMacdZone: this.formOptions.preSelect.checkMacdZone != null ? this.formOptions.preSelect.checkMacdZone : true,
-				checkMacdRiseBuy: this.formOptions.preSelect.checkMacdRiseBuy != null ? this.formOptions.preSelect.checkMacdRiseBuy : false,
-				checkMacdRiseSell: this.formOptions.preSelect.checkMacdRiseSell != null ? this.formOptions.preSelect.checkMacdRiseSell : false,
-				isActive: this.formOptions.preSelect.isActive != null ? this.formOptions.preSelect.isActive : true,
+				profit: this.formOptions?.preSelect?.profit != null ? String(this.formOptions.preSelect.profit) : 0,
+				checkRsi: this.formOptions?.preSelect?.checkRsi != null ? this.formOptions.preSelect.checkRsi : true,
+				checkMacdZone: this.formOptions?.preSelect?.checkMacdZone != null ? this.formOptions.preSelect.checkMacdZone : true,
+				checkMacdRiseBuy: this.formOptions?.preSelect?.checkMacdRiseBuy != null ? this.formOptions.preSelect.checkMacdRiseBuy : false,
+				checkMacdRiseSell: this.formOptions?.preSelect?.checkMacdRiseSell != null ? this.formOptions.preSelect.checkMacdRiseSell : false,
+				isActive: this.formOptions?.preSelect?.isActive != null ? this.formOptions.preSelect.isActive : true,
+				date:
+					this.formOptions?.preSelect?.date != null && this.formOptions?.preSelect?.date != []
+						? this.formOptions?.preSelect?.date.map((date) => String(date))
+						: [String(Date.now() - 30 * 24 * 60 * 60 * 1000), String(Date.now())],
 				decimals: null,
 			},
 			optionsList: [
@@ -115,7 +133,7 @@ export default {
 			],
 		};
 	},
-	components: { CustomSelect },
+	components: { CustomSelect, DatePicker },
 	async mounted() {
 		if (this.setting.symbolSelect) {
 			this.symbolList = await useFetch("/pairslist");
@@ -125,6 +143,9 @@ export default {
 	},
 	methods: {
 		setDecimals() {
+			if (!this.setting.decimalsInput) {
+				return false;
+			}
 			if (this.formOptions.preSelect.decimals != null) {
 				this.selectData.decimals = this.formOptions.preSelect.decimals;
 			} else if (this.symbolList.length != 0) {

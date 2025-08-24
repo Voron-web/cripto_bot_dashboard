@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import { addNewPair, deletePairApi, editPairApi } from "../../api/pairAPI";
-import { usePairsStore } from "../../store/pairsStore";
+import { addNewPair, deletePairApi, editPairApi } from "../../../api/pairAPI";
+import { usePairsStore } from "../../../store/pairsStore";
 
 export default {
 	props: {

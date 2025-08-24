@@ -44,8 +44,6 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
-
-
 input,
 button,
 textarea {
@@ -94,36 +92,36 @@ h6 {
 html {
   overflow-y: auto;
   scrollbar-gutter: stable;
-
 }
 
 body {
   width: 100%;
-  background: var(--bg-color)
+  background: var(--bg-color);
 }
 
 :root {
   --primary-color: #cb3cff;
-  --secondary-color: #8951FF;
+  --secondary-color: #8951ff;
   --text-color: #aeb9e1;
   --title-color: #fff;
-  --bg-color: #080F25;
-  --accent-color: #0A1330;
+  --bg-color: #080f25;
+  --neutral-color: #0a1330;
+  --accent-color: #21c3fc;
+  --value-color: #0038ff;
   --block-color: #0b1739;
   --border-block: 1px solid #343b4f;
-  --btn-gradient: linear-gradient(135.00deg, rgb(203, 60, 255) 19.855%, rgb(127, 37, 251) 68.339%);
+  --btn-gradient: linear-gradient(135deg, rgb(203, 60, 255) 19.855%, rgb(127, 37, 251) 68.339%);
 }
 
-
 @font-face {
-  font-family: 'Button';
-  src: url('../assets/fonts/Button/Button.ttf') format('truetype'),
-    url('../assets/fonts/Button/Button.woff') format('woff');
+  font-family: "Button";
+  src:
+    url("../assets/fonts/Button/Button.ttf") format("truetype"),
+    url("../assets/fonts/Button/Button.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   /* font-display: swap; */
 }
-
 
 #app {
   width: 100%;
@@ -132,4 +130,33 @@ body {
 
 .content__wrapper {
   padding: 20px;
+}
+
+.page {
+  &__title {
+    margin-bottom: 20px;
+    margin-top: 20px;
+    color: var(--title-color);
+    font-family: "Mona-Sans";
+    font-size: 28px;
+    font-weight: 700;
+  }
+  &__block {
+    padding: 20px;
+    background: var(--block-color);
+    border: var(--border-block);
+    border-radius: 12px;
+  }
+}
+.block {
+  &__title {
+    font-size: 20px;
+    font-family: "Mona-Sans";
+    color: var(--text-color);
+    font-weight: 700;
+    margin-bottom: 30px;
+    &_out {
+      margin-bottom: 10px;
+    }
+  }
 }

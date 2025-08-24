@@ -68,7 +68,7 @@ export default {
 
 		cursor: pointer;
 		&.active {
-			background-color: var(--accent-color);
+			background-color: var(--neutral-color);
 			color: #fff;
 
 			&::before {

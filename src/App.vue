@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import MainSidebar from "./components/aside/MainSidebar.vue";
-import "./style.css";
+import MainSidebar from "./components/UI/aside/MainSidebar.vue";
+import "./style.scss";
 import "@/assets/fonts/Mona/stylesheet.css";
 import "@/assets/fonts/Work/stylesheet.css";
 

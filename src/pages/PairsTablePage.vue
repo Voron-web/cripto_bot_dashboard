@@ -1,6 +1,6 @@
 <template>
 	<div class="content__wrapper table__wrapper">
-		<div class="title">Pairs list</div>
+		<div class="page__title">Pairs list</div>
 		<div class="table">
 			<div class="table__control"><FilterPanel @updateFilters="filterOption = $event" @clickAddPair="openDialog('add')" /></div>
 			<div class="table__content">
@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import FilterPanel from "@/components/pairs/FilterPanel.vue";
-import TablePairs from "@/components/pairs/TablePairs.vue";
-import PairDialog from "@/components/pairs/PairDialog.vue";
+import FilterPanel from "@/components/UI/pairs/FilterPanel.vue";
+import TablePairs from "@/components/UI/pairs/TablePairs.vue";
+import PairDialog from "@/components/UI/pairs/PairDialog.vue";
 
 import { usePairsStore } from "@/store/pairsStore";
 import { mapActions, mapState } from "pinia";
@@ -151,13 +151,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.title {
-	margin-bottom: 50px;
-	color: var(--title-color);
-	font-family: "Mona-Sans";
-	font-size: 20px;
-	font-weight: 600;
-}
 .table {
 	border-radius: 12px;
 	border: var(--border-block);

@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import SidebarMenu from "@/components/aside/SidebarMenu.vue";
+import SidebarMenu from "@/components/UI/aside/SidebarMenu.vue";
 import MainLogo from "@/components/UI/MainLogo.vue";
 
 export default {
@@ -41,9 +41,13 @@ export default {
 
 <style lang="scss" scoped>
 .sidebar {
+	min-height: 100%;
 	padding: 20px;
 	width: 100%;
 	box-shadow: 0 0 28px 0px #010511;
+	border: 1px solid var(--neutral-color);
+	border-radius: 12px;
+
 	&__wrapper {
 		width: 100%;
 		height: 100%;
