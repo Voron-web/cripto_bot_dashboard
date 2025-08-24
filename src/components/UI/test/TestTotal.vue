@@ -1,5 +1,5 @@
 <template>
-	<div class="page__block result__content">
+	<div class="result__content">
 		<div class="result__total-block result__block">
 			<div class="result__title">Total Capital</div>
 			<ApexCharts width="300" type="radialBar" :options="chartTotalOptions" :series="chartTotalSeries" />
@@ -25,7 +25,6 @@
 					<span>%</span>
 				</div>
 			</div>
-
 			<div class="result__block">
 				<div class="result__title">Average Trade Profit</div>
 				<div class="result__value">
@@ -54,6 +53,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import ApexCharts from "vue3-apexcharts";
+import getRootColor from "../../../composables/getRootColors";
 
 const props = defineProps({
 	data: Object,
@@ -61,10 +61,11 @@ const props = defineProps({
 
 // const chartTotalSeries = ref([]);
 const chartTotalSeries = [100 - (Number(props.data.fullProfit) / Number(props.data.params.startMoney)) * 100];
-const colors = {};
+let colors = getRootColor();
 
 const chartTotalOptions = {
 	chart: { id: "total" },
+	colors: [colors.primary],
 	plotOptions: {
 		radialBar: {
 			hollow: {
@@ -73,7 +74,7 @@ const chartTotalOptions = {
 			},
 			startAngle: -90,
 			endAngle: 90,
-			track: { startAngle: -90, endAngle: 90 },
+			track: { startAngle: -90, endAngle: 90, background: colors.value },
 			dataLabels: {
 				name: { show: false },
 				value: {
@@ -86,6 +87,7 @@ const chartTotalOptions = {
 					fontWeight: "900",
 					fontFamily: "Mona-Sans",
 					show: true,
+					color: colors.title,
 				},
 			},
 		},
@@ -95,16 +97,6 @@ const chartTotalOptions = {
 		active: { filter: { type: "none" } },
 	},
 };
-onMounted(() => {
-	const root = document.documentElement;
-	colors.value = getComputedStyle(root).getPropertyValue("--value-color");
-	colors.primary = getComputedStyle(root).getPropertyValue("--primary-color");
-	colors.title = getComputedStyle(root).getPropertyValue("--title-color");
-
-	chartTotalOptions.plotOptions.radialBar.track.background = colors.value;
-	chartTotalOptions.plotOptions.radialBar.dataLabels.value.color = colors.title;
-	chartTotalOptions.colors = [colors.primary];
-});
 </script>
 
 <style lang="scss" scoped>

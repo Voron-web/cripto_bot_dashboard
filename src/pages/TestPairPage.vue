@@ -10,10 +10,15 @@
 			<div class="test__result-wrapper">
 				<div class="test__result">
 					<div class="block__title block__title_out">Results Overview</div>
-					<TestTotal :data="testResult" />
+					<div class="page__block">
+						<TestTotal :data="testResult" />
+					</div>
 				</div>
 				<div class="test__charts">
 					<div class="block__title block__title_out">Test charts</div>
+					<div class="page__block">
+						<TestCharts :data="testResult" />
+					</div>
 				</div>
 			</div>
 			<div class="test__deals">
@@ -38,8 +43,8 @@ import PairForm from "../components/common/PairForm.vue";
 import CustomBtn from "../components/UI/CustomBtn.vue";
 import TestDealInfo from "../components/UI/test/TestDealInfo.vue";
 import TestTotal from "../components/UI/test/TestTotal.vue";
+import TestCharts from "../components/UI/test/TestCharts.vue";
 import { useFetch } from "../api/useFetch";
-import ApexCharts from "vue3-apexcharts";
 
 import MainPreloader from "../components/UI/MainPreloader.vue";
 

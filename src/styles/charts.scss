@@ -1,0 +1,30 @@
+.apexcharts-tooltip,
+.apexcharts-xaxistooltip {
+    color: var(--text-color) !important;
+    background: var(--block-color) !important;
+    border: var(--border-block) !important;
+    box-shadow: 2px 2px 6px -4px var(--primary-color) !important;
+}
+.apexcharts-tooltip.apexcharts-theme-light {
+    background: var(--block-color) !important;
+    border: var(--border-block) !important;
+}
+.apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
+    background: var(--block-color) !important;
+    border-color: var(--border-color) !important;
+}
+.apexcharts-menu {
+    background: var(--block-color) !important;
+    color: var(--text-color) !important;
+    border: var(--border-block) !important;
+    box-shadow: 2px 2px 6px -4px var(--primary-color) !important;
+}
+.apexcharts-theme-light .apexcharts-menu-item:hover {
+    background: var(--neutral-color) !important;
+}
+.apexcharts-xaxistooltip-bottom:before {
+    border-bottom-color: var(--border-color) !important;
+}
+.apexcharts-xaxistooltip-bottom:after {
+    border-bottom-color: var(--block-color) !important;
+}
