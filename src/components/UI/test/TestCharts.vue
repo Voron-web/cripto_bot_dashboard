@@ -96,8 +96,8 @@ const chartDealOptions = {
 };
 
 const chartDealSeries = [
-	{ name: "Profit", type: "bar", data: props.data.deals.map((deal) => deal.sell.profit.toFixed(2)), yAxisIndex: 1 },
-	{ name: "Ended capital", type: "line", data: props.data.deals.map((deal) => deal.sell.capital.toFixed(2)), yAxisIndex: 0 },
+	{ name: "Profit", type: "bar", data: props.data.deals.filter((item) => "profit" in item.sell).map((deal) => deal.sell.profit.toFixed(2)) },
+	{ name: "Ended capital", type: "line", data: props.data.deals.filter((item) => "profit" in item.sell).map((deal) => deal.sell.capital.toFixed(2)) },
 ];
 </script>
 
